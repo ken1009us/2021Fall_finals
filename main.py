@@ -1,4 +1,5 @@
 from scipy import stats
+
 import seaborn as sns
 import numpy as np
 import pandas as pd
@@ -10,7 +11,7 @@ def loadFile():
 	areaName = input('Which area? (Montreal, Toronto, Washington): ')
 
 	# nrows=10000000
-	trips_df = pd.read_csv(f'data/{areaName}/trips.csv', delimiter=',', nrows=1000)
+	trips_df = pd.read_csv(f'data/{areaName}/trips.csv', delimiter=',', nrows=1000000)
 	# print(trips_df.head())
 	# print(trips_df.dtypes)
 
