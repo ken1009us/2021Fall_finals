@@ -181,6 +181,34 @@ def plotHeatMap(stat):
 	plt.show()
 
 
+def avg_duration(trips_df):
+	# check the average duration for each member and casual rider
+	total_duration = trips_df.groupby(['start_date_day', 'is_member'])['duration_sec'].sum()
+	totalnum = trips_df.groupby(['start_date_day', 'is_member'])['is_member'].count()
+	average_duration = round(total_duration / totalnum, 2)
+	# create average duration dataframe
+	avg_duration_df = average_duration.to_frame().reset_index()
+	avg_duration_df.rename(columns={0: "average duration"}, inplace=True)
+	# dataframe of average trip duration of member
+	member_d = avg_duration_df.loc[avg_duration_df["is_member"] == 1]
+	# dataframe of average trip duration of casual
+	casual_d = avg_duration_df.loc[avg_duration_df["is_member"] == 0]
+
+	return member_d, casual_d
+
+
+def plot_duration(member_d, casual_d):
+	plt.figure(dpi=120)
+	plt.plot(member_d['start_date_day'], member_d['average duration'], label='member riders')
+	plt.plot(casual_d['start_date_day'], casual_d['average duration'], label='casual riders')
+	plt.title('Casual riders ride longer')
+	plt.xlabel('Date')
+	plt.ylabel('Trip Duration (sec)')
+	plt.xticks(fontsize=5)
+	plt.legend()
+	plt.show()
+
+
 if __name__ == '__main__':
 	trips_df, stations_df, weather_df = loadFile()
 
@@ -193,3 +221,6 @@ if __name__ == '__main__':
 	dp_dff = cal_percentage(dp_df)
 	f_df = filter_time(dp_dff)
 	plot(f_df)
+
+	member_duration, casual_duration = avg_duration(new_trips_df)
+	plot_duration(member_duration, casual_duration)
