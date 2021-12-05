@@ -1,9 +1,9 @@
 from scipy import stats
-
 import seaborn as sns
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import datetime
 # import cartopy
 
 def loadFile():
@@ -88,6 +88,69 @@ def dataAnalysis(new_trips_df, new_weather_df):
 
 	return column_name_list, weather_duration_relation_df, stat
 
+def member(dataframe):
+	## tranform start date
+	dataframe.groupby(['start_date']).size().reset_index()
+	dataframe['start_date_date'] = pd.to_datetime(dataframe['start_date']).dt.date
+
+	# group by date
+	temp_m = dataframe.groupby(['start_date_date']).size().reset_index()
+	temp_m.rename(columns={0: "d_count"}, inplace=True)
+
+	# group by isMember and date
+	memdp = dataframe.groupby(['start_date_date', 'is_member']).size().reset_index()
+	memdp.rename(columns={0: "m_count"}, inplace=True)
+	# print(memdp)
+
+	# outerjoin two dataframe
+	outer_join = pd.merge(temp_m, memdp, on='start_date_date', how='outer')
+	outer_join['date_date'] = pd.to_datetime(outer_join['start_date_date'], format='%Y/%m/%d').dt.date
+	return outer_join
+
+def cal_percentage(dataframe):
+	dataframe['percentage'] = (dataframe['m_count'] / dataframe['d_count']) * 100
+	return dataframe
+
+def filter_time(dataframe):
+	min_time = dataframe.iloc[0]['date_date']
+	max_time = dataframe.iloc[-1]['date_date']
+	# print(min_time,max_time)
+	print('From when')
+	year_s = input(f'Which Year? (Must between {min_time} and {max_time}): ')
+	month_s = input(f'Which Month? (Must between {min_time} and {max_time}): ')
+	date_s = input(f'Which Date? (Must between {min_time} and {max_time}): ')
+	print('to when')
+	year_e = input(f'Which Year? (Must between {min_time} and {max_time}): ')
+	month_e = input(f'Which Month? (Must between {min_time} and {max_time}): ')
+	date_e = input(f'Which Date? (Must between {min_time} and {max_time}): ')
+
+	df_time = dataframe[(dataframe['date_date']<= datetime.date(int(year_e), int(month_e), int(date_e)))&
+						(dataframe['date_date']>= datetime.date(int(year_s), int(month_s), int(date_s)))]
+
+	return df_time
+
+def plot(dataframe):
+	# loc the dataframe
+
+	dataframe_m = dataframe.loc[dataframe["is_member"] == 0]
+	# print(dataframe_m)
+	dataframe_n = dataframe.loc[dataframe["is_member"] == 1]
+	# print(dataframe_n)
+
+	plt.figure(dpi=200)
+	plt.bar(dataframe_m["start_date_date"], dataframe_m["m_count"], color='green',
+			width=0.5, alpha = 0.5)
+
+	plt.bar(dataframe_n["start_date_date"], dataframe_n["m_count"], color='orange',
+			width=0.5, alpha = 0.5)
+
+	plt.xlabel("Started date", fontsize=7)
+	plt.ylabel("Member Count", fontsize=7)
+	plt.xticks(fontsize=5)
+	plt.yticks(fontsize=7)
+	plt.title("Club members take bike more often", fontsize=8)
+	plt.show()
+
 
 def plotScatter(column_name_list, weather_duration_relation_df, stat):
 	column_name_list = column_name_list
@@ -96,16 +159,14 @@ def plotScatter(column_name_list, weather_duration_relation_df, stat):
 	fig, ax = plt.subplots(4, 5, figsize=(30,25))
 	j, k = 0, 0
 	for i in range(len(column_name_list)):
-	    ax[j, k].scatter(weather_duration_relation_df[column_name_list[i]],
+		ax[j, k].scatter(weather_duration_relation_df[column_name_list[i]],
 						 weather_duration_relation_df['duration_sec'],
 						 alpha=0.7)
-
-	    ax[j, k].set_title(column_name_list[i])
-
-	    k += 1
-	    if k > 4:
-	        j += 1
-	        k = 0
+		ax[j, k].set_title(column_name_list[i])
+		k += 1
+		if k > 4:
+			j += 1
+			k = 0
 
 	fig.tight_layout()
 	ax[3,4].set_axis_off()
@@ -121,7 +182,13 @@ def plotHeatMap(stat):
 
 if __name__ == '__main__':
 	trips_df, stations_df, weather_df = loadFile()
+
 	new_trips_df, new_weather_df = dataPreprocessing(trips_df, weather_df)
 	column_name_list, weather_duration_relation_df, stat = dataAnalysis(new_trips_df, new_weather_df)
 	plotScatter(column_name_list, weather_duration_relation_df)
 	plotHeatMap(stat)
+
+	dp_df = member(trips_df)
+	dp_dff = cal_percentage(dp_df)
+	f_df = filter_time(dp_dff)
+	plot(f_df)
