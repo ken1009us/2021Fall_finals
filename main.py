@@ -153,7 +153,7 @@ def plot(dataframe):
 	plt.show()
 
 
-def plotScatter(column_name_list, weather_duration_relation_df, stat):
+def plotScatter(column_name_list, weather_duration_relation_df):
 	column_name_list = column_name_list
 	weather_duration_relation_df = weather_duration_relation_df
 
