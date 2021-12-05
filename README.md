@@ -16,7 +16,7 @@ pip install matplotlib
 
 ## Preparation
 
-import scipy, seaborn, numpy, pandas, matplotlib
+Import scipy, seaborn, numpy, pandas, matplotlib, datetime.
 
 ```python
 from scipy import stats
@@ -24,5 +24,6 @@ from scipy import stats
 import seaborn as sns
 import numpy as np
 import pandas as pd
+import datetime
 import matplotlib.pyplot as plt
 ```
