@@ -112,18 +112,7 @@ def cal_percentage(dataframe):
 	dataframe['percentage'] = (dataframe['m_count'] / dataframe['d_count']) * 100
 	return dataframe
 
-def filter_time(dataframe):
-	min_time = dataframe.iloc[0]['date_date']
-	max_time = dataframe.iloc[-1]['date_date']
-	# print(min_time,max_time)
-	print('From when')
-	year_s = input(f'Which Year? (Must between {min_time} and {max_time}): ')
-	month_s = input(f'Which Month? (Must between {min_time} and {max_time}): ')
-	date_s = input(f'Which Date? (Must between {min_time} and {max_time}): ')
-	print('to when')
-	year_e = input(f'Which Year? (Must between {min_time} and {max_time}): ')
-	month_e = input(f'Which Month? (Must between {min_time} and {max_time}): ')
-	date_e = input(f'Which Date? (Must between {min_time} and {max_time}): ')
+def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
 
 	df_time = dataframe[(dataframe['date_date']<= datetime.date(int(year_e), int(month_e), int(date_e)))&
 						(dataframe['date_date']>= datetime.date(int(year_s), int(month_s), int(date_s)))]
@@ -217,9 +206,24 @@ if __name__ == '__main__':
 	plotScatter(column_name_list, weather_duration_relation_df)
 	plotHeatMap(stat)
 
+
 	dp_df = member(trips_df)
 	dp_dff = cal_percentage(dp_df)
-	f_df = filter_time(dp_dff)
+
+
+	min_time = dp_dff.iloc[0]['date_date']
+	max_time = dp_dff.iloc[-1]['date_date']
+
+	print('From when')
+	year_s = input(f'Which Year? (Must between {min_time} and {max_time}): ')
+	month_s = input(f'Which Month? (Must between {min_time} and {max_time}): ')
+	date_s = input(f'Which Date? (Must between {min_time} and {max_time}): ')
+	print('to when')
+	year_e = input(f'Which Year? (Must between {min_time} and {max_time}): ')
+	month_e = input(f'Which Month? (Must between {min_time} and {max_time}): ')
+	date_e = input(f'Which Date? (Must between {min_time} and {max_time}): ')
+
+	f_df = filter_time(dp_dff, year_s, month_s, date_s, year_e, month_e, date_e)
 	plot(f_df)
 
 	member_duration, casual_duration = avg_duration(new_trips_df)
