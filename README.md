@@ -78,7 +78,7 @@ Here are some scatter plots, they show us the correlation between weather condit
 
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo1-1.png "hypo1-1")
 
-If we want to go through the correlation between each factor and total daily trips duration, we can use some statistical methods. I chose the Pearson correlation coefficient which is a measure of linear correlation between two sets of data. We got two numbers from the method. The first number is Pearson's r, which means a numerical summary of the strength of the linear association between the variables, and the second number is the probability that the true value of r is zero. We can find out that there is a linear relationship between the maximum temperature and total daily trips duration. By contrast, the maximum wind speed at 50 meters and total daily trips duration have the largest negative correlation.
+If we want to go through the correlation between each factor and total daily trips duration, we can use some statistical methods. We chose the Pearson correlation coefficient which is a measure of linear correlation between two sets of data. We got two numbers from the method. The first number is Pearson's r, which means a numerical summary of the strength of the linear association between the variables, and the second number is the probability that the true value of r is zero. We can find out that there is a linear relationship between the maximum temperature and total daily trips duration. By contrast, the maximum wind speed at 50 meters and total daily trips duration have the largest negative correlation.
 
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo1-2.png "Station Dataframe")
 
