@@ -1,7 +1,6 @@
 from scipy import stats
 
 import seaborn as sns
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
@@ -43,14 +42,14 @@ def dataAnalysis(new_trips_df, new_weather_df):
 	# set index to the date.
 	new_weather_df = new_weather_df.set_index('date')
 
-	# Merge the dataframe new_weather_df and daily_trip, and drop the rows which values are N/A.
+	# merge the dataframe new_weather_df and daily_trip, and drop the rows which values are N/A.
 	weather_duration_relation_df = pd.concat([new_weather_df, daily_trips], axis=1)
 	weather_duration_relation_df = weather_duration_relation_df.dropna()
 
 	# generate discriptive statistic
 	dis_stat = round(weather_duration_relation_df.describe(), 2)
 
-	# preprocessing the column of yearid.
+	# preprocess the column of yearid.
 	column_name_list = weather_duration_relation_df.columns.values.tolist()
 	if 'yearid' in column_name_list:
 		column_name_list.remove('yearid')
