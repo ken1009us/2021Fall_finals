@@ -36,8 +36,16 @@ import matplotlib.pyplot as plt
 
 ## Data
 
+Trip Dataframe
+
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/trip.png "Trip Dataframe")
+
+Station Dataframe
+
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/station.png "Station Dataframe")
+
+Weather Dataframe
+
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/weather.png "Weather Dataframe")
 
 ## Output
