@@ -5,38 +5,24 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
-# import cartopy
+
 
 def loadFile():
 	areaName = input('Which area? (Montreal, Toronto, Washington): ')
-
 	# nrows=10000000
 	trips_df = pd.read_csv(f'data/{areaName}/trips.csv', delimiter=',', nrows=1000000)
-	# print(trips_df.head())
-	# print(trips_df.dtypes)
-
 	stations_df = pd.read_csv(f'data/{areaName}/stations.csv', delimiter=',')
-	# print(stations_df.head())
-	# print(stations_df.dtypes)
-
 	weather_df = pd.read_csv(f'data/{areaName}/weather.csv', delimiter=',')
-	# print(weather_df.head())
-	# print(weather_df.dtypes)
-
 	return trips_df, stations_df, weather_df
 
 
 def dataPreprocessing(trips_df, weather_df):
 	trips_df = trips_df
-	# convert date to datetime
 	trips_df['start_date']= pd.to_datetime(trips_df['start_date'])
 	trips_df['end_date']= pd.to_datetime(trips_df['end_date'])
-	# print(trips_df['start_date'])
-	# print(trips_df['end_date'])
 
 	# filter the dataframe, remove the rows that the duration is smaller than zero.
 	trips_df = trips_df[trips_df['duration_sec'] > 0]
-	# print(trips_df)
 
 	# convert date to datetime
 	weather_df['date']= pd.to_datetime(weather_df['date'])
@@ -49,27 +35,20 @@ def dataAnalysis(new_trips_df, new_weather_df):
 	new_weather_df = new_weather_df
 
 	# Hypothesis #1: Total daily trips duration depends on weather conditions.
-	# print(new_weather_df.describe())
-	# print(new_trips_df['start_date'].dtype)
-
 	# convert to pandas series date type, remove the time, and add the new column called start_date_day
 	new_trips_df['start_date_day'] = new_trips_df['start_date'].dt.date
 	# group by the start_date_day, and summarize the duration.
 	daily_trips = new_trips_df.groupby(['start_date_day'])['duration_sec'].sum()
-	# print(daily_trips)
 
 	# set index to the date.
 	new_weather_df = new_weather_df.set_index('date')
-	# print(new_weather_df.head())
 
 	# Merge the dataframe new_weather_df and daily_trip, and drop the rows which values are N/A.
 	weather_duration_relation_df = pd.concat([new_weather_df, daily_trips], axis=1)
 	weather_duration_relation_df = weather_duration_relation_df.dropna()
-	# print(weather_duration_relation_df)
 
 	# generate discriptive statistic
 	dis_stat = round(weather_duration_relation_df.describe(), 2)
-	# print(dis_stat)
 
 	# preprocessing the column of yearid.
 	column_name_list = weather_duration_relation_df.columns.values.tolist()
@@ -88,6 +67,7 @@ def dataAnalysis(new_trips_df, new_weather_df):
 	print(stat)
 
 	return column_name_list, weather_duration_relation_df, stat
+
 
 def member(dataframe):
 	## tranform start date
@@ -108,9 +88,11 @@ def member(dataframe):
 	outer_join['date_date'] = pd.to_datetime(outer_join['start_date_date'], format='%Y/%m/%d').dt.date
 	return outer_join
 
+
 def cal_percentage(dataframe):
 	dataframe['percentage'] = (dataframe['m_count'] / dataframe['d_count']) * 100
 	return dataframe
+
 
 def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
 
@@ -119,13 +101,12 @@ def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
 
 	return df_time
 
+
 def plot(dataframe):
 	# loc the dataframe
 
 	dataframe_m = dataframe.loc[dataframe["is_member"] == 0]
-	# print(dataframe_m)
 	dataframe_n = dataframe.loc[dataframe["is_member"] == 1]
-	# print(dataframe_n)
 
 	plt.figure(dpi=200)
 	plt.bar(dataframe_m["start_date_date"], dataframe_m["m_count"], color='green',
@@ -206,10 +187,8 @@ if __name__ == '__main__':
 	plotScatter(column_name_list, weather_duration_relation_df)
 	plotHeatMap(stat)
 
-
 	dp_df = member(trips_df)
 	dp_dff = cal_percentage(dp_df)
-
 
 	min_time = dp_dff.iloc[0]['date_date']
 	max_time = dp_dff.iloc[-1]['date_date']
