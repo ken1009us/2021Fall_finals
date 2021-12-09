@@ -41,4 +41,18 @@ import matplotlib.pyplot as plt
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/weather.png "Weather Dataframe")
 
 
-<!-- ## Output -->
+## Output
+
+Hypothesis #1 - Total daily trips duration depends on weather conditions (Take Montreal for example)
+
+Scatter Plot
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo1-1.png "hypo1-1")
+
+Correlation between weather conditions and total daily trips duration
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo1-2.png "Station Dataframe")
+
+Heatmap
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo1-3.png "Station Dataframe")
