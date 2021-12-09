@@ -336,6 +336,13 @@ def plot_heatMap(stat):
 
 
 def avg_duration(trips_df):
+	"""
+	This function calculates the daily average duration of trips for member riders and casual riders, and returns dataframe
+	for each of them.
+	:param trips_df: (dataframe) the dataframe which contains the data after data cleaning.
+	:return: member_d (dataframe) the dataframe that contains the data of average daily duration of trips for member riders.
+	:return: casual_d the dataframe that contains the data of average daily duration of trips for casual riders.
+	"""
 	# check the average duration for each member and casual rider
 	total_duration = trips_df.groupby(['start_date_day', 'is_member'])['duration_sec'].sum()
 	totalnum = trips_df.groupby(['start_date_day', 'is_member'])['is_member'].count()
