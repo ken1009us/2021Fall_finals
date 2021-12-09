@@ -125,6 +125,15 @@ In Washington, you can see that the proportion of casual riders is quite low jus
 
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo3-w.png "Station Dataframe")
 
+Hypothesis #4 - In Washington DC, members tend to ride a longer distance than casual riders on a trip.
+
+
+
+
+
+
+
+
 ## Data Sources
 
 1. Bike Sharing - Big Data Systems dev & impl\
@@ -134,4 +143,4 @@ https://www.kaggle.com/v1teka/bike-sharing-big-data-systems-dev-impl/notebook
 https://s3.amazonaws.com/capitalbikeshare-data/index.html
 
 3. Novel Corona Virus 2019 Dataset\
-https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/tasks?taskId=508
+https://www.kaggle.com/sudalairajkumar/covid19-in-usa
