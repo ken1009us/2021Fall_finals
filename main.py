@@ -167,6 +167,11 @@ def avg_duration(trips_df):
 
 
 def plot_duration(member_d, casual_d):
+	"""
+	This function would present a plot which contains the daily average duration for member riders and casual riders.
+	:param member_d: (dataframe) the dataframe that contains the data of average daily duration of trips for member riders.
+	:param casual_d: (dataframe) the dataframe that contains the data of average daily duration of trips for casual riders.
+	"""
 	plt.figure(dpi=120)
 	plt.plot(member_d['start_date_day'], member_d['average duration'], label='member riders')
 	plt.plot(casual_d['start_date_day'], casual_d['average duration'], label='casual riders')
