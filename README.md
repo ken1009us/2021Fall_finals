@@ -44,25 +44,25 @@ import matplotlib.pyplot as plt
 
 Weather conditions:
 
-prectot: Precipitation (mm day-1)
-qv2m : Specific Humidity at 2 Meters (g/kg)
-rh2m: Relative Humidity at 2 Meters (%)
-ps: Surface Pressure (kPa)
-t2m_range: Temperature Range at 2 Meters (C)
-ts: Earth Skin Temperature (C)
-t2mdew:  Dew/Frost Point at 2 Meters (C)
-t2mwet: Wet Bulb Temperature at 2 Meters (C)
-t2m_max: Maximum Temperature at 2 Meters (C)
-t2m_min: Minimum Temperature at 2 Meters (C)
-t2m: Temperature at 2 Meters (C)
-ws50m_range: Wind Speed Range at 50 Meters (m/s)
-ws10m_range: Wind Speed Range at 10 Meters (m/s)
-ws50m_min: Minimum Wind Speed at 50 Meters (m/s)
-ws10m_min: Minimum Wind Speed at 10 Meters (m/s)
-ws50m_max: Maximum Wind Speed at 50 Meters (m/s)
-ws10m_max: Maximum Wind Speed at 10 Meters (m/s
-ws50m: Wind Speed at 50 Meters (m/s)
-ws10m: Wind Speed at 10 Meters (m/s)
+prectot: Precipitation (mm day-1)\
+qv2m : Specific Humidity at 2 Meters (g/kg)\
+rh2m: Relative Humidity at 2 Meters (%)\
+ps: Surface Pressure (kPa)\
+t2m_range: Temperature Range at 2 Meters (C)\
+ts: Earth Skin Temperature (C)\
+t2mdew:  Dew/Frost Point at 2 Meters (C)\
+t2mwet: Wet Bulb Temperature at 2 Meters (C)\
+t2m_max: Maximum Temperature at 2 Meters (C)\
+t2m_min: Minimum Temperature at 2 Meters (C)\
+t2m: Temperature at 2 Meters (C)\
+ws50m_range: Wind Speed Range at 50 Meters (m/s)\
+ws10m_range: Wind Speed Range at 10 Meters (m/s)\
+ws50m_min: Minimum Wind Speed at 50 Meters (m/s)\
+ws10m_min: Minimum Wind Speed at 10 Meters (m/s)\
+ws50m_max: Maximum Wind Speed at 50 Meters (m/s)\
+ws10m_max: Maximum Wind Speed at 10 Meters (m/s)\
+ws50m: Wind Speed at 50 Meters (m/s)\
+ws10m: Wind Speed at 10 Meters (m/s)\
 
 Hypothesis #1 - Total daily trips duration depends on weather conditions (Take Montreal for example)
 
