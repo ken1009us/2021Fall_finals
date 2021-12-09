@@ -102,3 +102,25 @@ As for the Washington region, the casual riders also ride longer than the member
 
 
 Hypothesis #3 - Compared to casual riders, member riders have a higher possibility to take bikes
+
+Calculate the percentage of members riding bikes.
+
+In conclusion about Montreal, we found out that there are some missing data in the dataset. However, if there is sufficient data for the whole year, then you can find out compared to casual riders, member riders have a higher possibility to take bikes in 2014.
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo3-m.png "Station Dataframe")
+
+In Toronto, the dataset only records casual riders. So, in this dataset, we can only find out when the casual riders ride bikes. We cannot come to the conclusion of this hypothesis due to the fact that the dataset did not provide sufficient data for us to explore.
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo3-t.png "Station Dataframe")
+
+In Washington, you can see that the proportion of casual riders is quite low just like in Montreal. It fits the hypothesis compared to casual riders, member riders have a higher possibility to take bikes.
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo3-w.png "Station Dataframe")
+
+## Data Sources
+
+1. Capital Bikeshare trip history data (Capital Bikeshare is a bike-sharing company in Washington)\
+https://s3.amazonaws.com/capitalbikeshare-data/index.html
+
+2. Novel Corona Virus 2019 Dataset\
+https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/tasks?taskId=508
