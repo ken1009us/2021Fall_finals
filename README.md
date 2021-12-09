@@ -127,8 +127,11 @@ In Washington, you can see that the proportion of casual riders is quite low jus
 
 ## Data Sources
 
-1. Capital Bikeshare trip history data (Capital Bikeshare is a bike-sharing company in Washington)\
+1. Bike Sharing - Big Data Systems dev & impl\
+https://www.kaggle.com/v1teka/bike-sharing-big-data-systems-dev-impl/notebook
+
+2. Capital Bikeshare trip history data (Capital Bikeshare is a bike-sharing company in Washington)\
 https://s3.amazonaws.com/capitalbikeshare-data/index.html
 
-2. Novel Corona Virus 2019 Dataset\
+3. Novel Corona Virus 2019 Dataset\
 https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/tasks?taskId=508
