@@ -1,6 +1,4 @@
-# 597PR Final Project
-
-Data analysis of Bike Sharing - Big Data Systems dev & impl
+# Data analysis of Bike Sharing - Big Data Systems dev & impl
 
 ## Introduction
 
