@@ -108,8 +108,9 @@ def load_file():
 	was_month = input('Which month do you want to analyze for hypothesis 4? (4, 5, 6): ')
 	was_trip_dis_df = pd.read_csv(f'data/Washington/20200{was_month}-capitalbikeshare-tripdata.csv',
 									delimiter=',', nrows=100000)
+	us_confirmed_df = pd.read_csv(f'data/us_counties_covid19_daily.csv', delimiter=',')
 
-	return trips_df, stations_df, weather_df, was_trip_dis_df
+	return trips_df, stations_df, weather_df, was_trip_dis_df, us_confirmed_df, was_month
 	# return was_trip_dis_df
 
 
@@ -344,6 +345,40 @@ def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
 
 	return df_time
 
+def drop_na(dataframe):
+	"""
+	This function is use to drop null rows in dataframe.
+	:param dataframe: the dataframe you need to drop null columns.
+	:return: return dataframe after dropping null columns.
+	"""
+	dataframe.dropna()
+	return dataframe
+
+def count_trips(dataframe):
+	"""
+	This function is to count trips per day.
+	:param dataframe: The dataframe you for area you want to counts how many trips happened per day.
+	:return: return a new dataframe after calculating.
+	"""
+	dataframe['started_date'] = pd.to_datetime(dataframe['started_at']).dt.date
+	dataframe_c = dataframe.groupby(['started_date']).size().reset_index()
+	dataframe_c.rename(columns={0: "count"}, inplace=True)
+	dataframe_c.rename(columns={"started_date": "date_date"}, inplace=True)
+	return dataframe_c
+
+def daily_cases(dataframe):
+	"""
+	The function is used to count how many confirmed cases happened per day.
+	:param dataframe: The dataframe contain cases information about confirmed cases.
+	:return: a new dataframe calculate confirmed cases per day.
+	"""
+
+	dataframe['date_date'] = pd.to_datetime(dataframe['date']).dt.date
+	washington_df = dataframe.loc[dataframe['state'] == 'Washington']
+	washington_date_df = washington_df.set_index('date_date')
+
+	cases_df = washington_date_df.groupby('date_date')['cases'].sum().reset_index()
+	return cases_df
 
 def plot_bar(dataframe):
 	"""
@@ -542,9 +577,26 @@ def daily_distance(trip_dis_df):
 	distance_df = daily_distance.to_frame().reset_index()
 	return distance_df
 
+def plot_disncases(dataframe):
+	"""
+	This function presents the plot of the relationship between daily distance and confirmed cases.
+	:param dataframe: The dataframe contains average distance and number of confirmed cases.
+	"""
+	plt.figure(dpi=120)
+	plt.plot(dataframe['date_date'], dataframe['avg_dis'], label='average distance')
+	plt.bar(dataframe['date_date'], dataframe['cases'], color='green',
+			width=0.5, alpha = 0.5)
+	plt.title('The relationship between daily distance and confirmed cases.')
+	plt.xlabel('Date')
+	plt.ylabel('Average Distance (km)')
+	plt.xticks(fontsize=5)
+	plt.legend()
+	plt.show()
+
+
 
 if __name__ == '__main__':
-	trips_df, stations_df, weather_df, was_trip_dis_df = load_file()
+	trips_df, stations_df, weather_df, was_trip_dis_df, us_confirmed_df, month = load_file()
 	new_trips_df, new_weather_df, new_was_trip_dis_df = data_preprocessing(trips_df, weather_df, was_trip_dis_df)
 	column_name_list, weather_duration_relation_df, stat = data_analysis(new_trips_df, new_weather_df)
 	plot_scatter(column_name_list, weather_duration_relation_df)
@@ -568,6 +620,18 @@ if __name__ == '__main__':
 	f_df = filter_time(dp_dff, year_s, month_s, date_s, year_e, month_e, date_e)
 	plot_bar(f_df)
 
+
+	was_trip_dis_df = drop_na(was_trip_dis_df)
+	was_trip_df = count_trips(was_trip_dis_df)
+
+	wcases_df = daily_cases(us_confirmed_df)
+	if int(month) == 4 or int(month) == 6:
+		cases_time_df = filter_time(wcases_df, 2020, int(month), 1, 2020, int(month), 30)
+	else:
+		cases_time_df = filter_time(wcases_df, 2020, int(month), 1, 2020, int(month), 31)
+	merge_df = pd.merge(cases_time_df, was_trip_df, on='date_date', how='inner')
+
+
 	member_duration, casual_duration = avg_duration(new_trips_df)
 	plot_duration(member_duration, casual_duration)
 
@@ -576,4 +640,10 @@ if __name__ == '__main__':
 
 	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
 	daily_total_distance = daily_distance(final_was_trip_dis_df)
+
+	merge_df_final = pd.merge(merge_df, daily_total_distance, on='date_date', how='inner')
+
+	merge_df_final['avg_dis'] = round(merge_df_final['distance']/merge_df_final['count'],2)
+	plot_disncases(merge_df_final)
+
 
