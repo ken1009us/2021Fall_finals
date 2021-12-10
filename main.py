@@ -460,7 +460,7 @@ def plot_duration(member_d, casual_d):
 
 def count_distance(new_was_trip_dis_df):
 	"""
-	This function is used for adding the distance column.
+	This function is used for counting the distance.
 	:param: new_was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip.
 
 	>>> count_distance(new_was_trip_dis_df)
