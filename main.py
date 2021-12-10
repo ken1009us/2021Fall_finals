@@ -605,20 +605,7 @@ if __name__ == '__main__':
 	dp_df = member(trips_df)
 	dp_dff = cal_percentage(dp_df)
 
-	min_time = dp_dff.iloc[0]['date_date']
-	max_time = dp_dff.iloc[-1]['date_date']
-
-	print('From when')
-	year_s = input(f'Which Year? (Must between {min_time} and {max_time}): ')
-	month_s = input(f'Which Month? (Must between {min_time} and {max_time}): ')
-	date_s = input(f'Which Date? (Must between {min_time} and {max_time}): ')
-	print('to when')
-	year_e = input(f'Which Year? (Must between {min_time} and {max_time}): ')
-	month_e = input(f'Which Month? (Must between {min_time} and {max_time}): ')
-	date_e = input(f'Which Date? (Must between {min_time} and {max_time}): ')
-
-	f_df = filter_time(dp_dff, year_s, month_s, date_s, year_e, month_e, date_e)
-	plot_bar(f_df)
+	plot_bar(dp_dff)
 
 
 	was_trip_dis_df = drop_na(was_trip_dis_df)
