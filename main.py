@@ -100,7 +100,6 @@ def load_file():
 	"""
 
 	area_name = input('Which area do you want to analyze? (Montreal, Toronto, Washington): ')
-	# nrows=10000000
 	trips_df = pd.read_csv(f'data/{area_name}/trips.csv', delimiter=',', nrows=1000000)
 	stations_df = pd.read_csv(f'data/{area_name}/stations.csv', delimiter=',')
 	weather_df = pd.read_csv(f'data/{area_name}/weather.csv', delimiter=',')
@@ -111,7 +110,6 @@ def load_file():
 	us_confirmed_df = pd.read_csv(f'data/us_counties_covid19_daily.csv', delimiter=',')
 
 	return trips_df, stations_df, weather_df, was_trip_dis_df, us_confirmed_df, was_month
-	# return was_trip_dis_df
 
 
 def data_preprocessing(trips_df, weather_df, was_trip_dis_df):
@@ -295,7 +293,7 @@ def member(dataframe):
 	:return: dataframe after calculating how many members take bike per day.
 	"""
 
-	## tranform start date
+	# tranform start date
 	dataframe.groupby(['start_date']).size().reset_index()
 	dataframe['start_date_date'] = pd.to_datetime(dataframe['start_date']).dt.date
 
@@ -345,6 +343,7 @@ def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
 
 	return df_time
 
+
 def drop_na(dataframe):
 	"""
 	This function is use to drop null rows in dataframe.
@@ -353,6 +352,7 @@ def drop_na(dataframe):
 	"""
 	dataframe.dropna()
 	return dataframe
+
 
 def count_trips(dataframe):
 	"""
@@ -365,6 +365,7 @@ def count_trips(dataframe):
 	dataframe_c.rename(columns={0: "count"}, inplace=True)
 	dataframe_c.rename(columns={"started_date": "date_date"}, inplace=True)
 	return dataframe_c
+
 
 def daily_cases(dataframe):
 	"""
@@ -379,6 +380,7 @@ def daily_cases(dataframe):
 
 	cases_df = washington_date_df.groupby('date_date')['cases'].sum().reset_index()
 	return cases_df
+
 
 def plot_bar(dataframe):
 	"""
@@ -577,6 +579,7 @@ def daily_distance(trip_dis_df):
 	distance_df = daily_distance.to_frame().reset_index()
 	return distance_df
 
+
 def plot_disncases(dataframe):
 	"""
 	This function presents the plot of the relationship between daily distance and confirmed cases.
@@ -594,39 +597,47 @@ def plot_disncases(dataframe):
 	plt.show()
 
 
-
 if __name__ == '__main__':
+	# load the files
 	trips_df, stations_df, weather_df, was_trip_dis_df, us_confirmed_df, month = load_file()
+	# data pre-processing
 	new_trips_df, new_weather_df, new_was_trip_dis_df = data_preprocessing(trips_df, weather_df, was_trip_dis_df)
+	# data analysis
 	column_name_list, weather_duration_relation_df, stat = data_analysis(new_trips_df, new_weather_df)
+
+	# Hypothesis #1: Total daily trips duration depends on weather conditions
 	plot_scatter(column_name_list, weather_duration_relation_df)
 	plot_heatMap(stat)
 
+	# Hypothesis #2: Club members ride longer in a trip
+	member_duration, casual_duration = avg_duration(new_trips_df)
+	plot_duration(member_duration, casual_duration)
+
+	# Hypothesis #3: Compared to casual riders, member riders have a higher possibility to take bikes
 	dp_df = member(trips_df)
 	dp_dff = cal_percentage(dp_df)
-
 	plot_bar(dp_dff)
 
+	# Hypothesis #4: During April to June in 2020, members tend to ride a longer distance than casual riders on a trip in Washington.
+	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
+	plot_was_member_casual_distance(final_was_trip_dis_df)
+
+	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
+
+	# Hypothesis #5: During April to June in 2020, as the number of confirmed cases for coronavirus increases,
+	# the daily average distance of trips would decrease in Washington.
+	daily_total_distance = daily_distance(final_was_trip_dis_df)
 
 	was_trip_dis_df = drop_na(was_trip_dis_df)
 	was_trip_df = count_trips(was_trip_dis_df)
 
+	# data pre-processing for covid confirmed cases and trips data
 	wcases_df = daily_cases(us_confirmed_df)
 	if int(month) == 4 or int(month) == 6:
 		cases_time_df = filter_time(wcases_df, 2020, int(month), 1, 2020, int(month), 30)
 	else:
 		cases_time_df = filter_time(wcases_df, 2020, int(month), 1, 2020, int(month), 31)
 	merge_df = pd.merge(cases_time_df, was_trip_df, on='date_date', how='inner')
-
-
-	member_duration, casual_duration = avg_duration(new_trips_df)
-	plot_duration(member_duration, casual_duration)
-
-	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
-	plot_was_member_casual_distance(final_was_trip_dis_df)
-
-	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
-	daily_total_distance = daily_distance(final_was_trip_dis_df)
 
 	merge_df_final = pd.merge(merge_df, daily_total_distance, on='date_date', how='inner')
 
