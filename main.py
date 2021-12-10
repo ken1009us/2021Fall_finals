@@ -289,6 +289,12 @@ def data_analysis(new_trips_df, new_weather_df):
 
 
 def member(dataframe):
+	"""
+	The function is calculating how many members take bikes per day. And it will return the dataframe after calculating.
+	:param dataframe:  the dataframe from load file.
+	:return: dataframe after calculating how many members take bike per day.
+	"""
+
 	## tranform start date
 	dataframe.groupby(['start_date']).size().reset_index()
 	dataframe['start_date_date'] = pd.to_datetime(dataframe['start_date']).dt.date
@@ -309,11 +315,30 @@ def member(dataframe):
 
 
 def cal_percentage(dataframe):
+	"""
+	This function is calculating the percentage of member in total.
+	:param dataframe: the dataframe with column has member count and total count
+	:return: dataframe with a new column calculating the percentage
+	>>> (25 / 100)* 100
+	25
+	"""
+
 	dataframe['percentage'] = (dataframe['m_count'] / dataframe['d_count']) * 100
 	return dataframe
 
 
 def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
+	"""
+	This function is filtering the time you need in the dataset.
+	:param dataframe: the dataframe you need to filter the time
+	:param year_s: integer for start year
+	:param month_s: integer for start month
+	:param date_s: integer for start date
+	:param year_e: integer for end year
+	:param month_e: integer for end month
+	:param date_e: integer for end date
+	:return: the dataframe finishing filter time
+	"""
 
 	df_time = dataframe[(dataframe['date_date']<= datetime.date(int(year_e), int(month_e), int(date_e)))&
 						(dataframe['date_date']>= datetime.date(int(year_s), int(month_s), int(date_s)))]
@@ -322,7 +347,11 @@ def filter_time(dataframe,year_s, month_s, date_s, year_e, month_e, date_e):
 
 
 def plot_bar(dataframe):
-	# loc the dataframe
+	"""
+	This function is plotting the bar chart from the dataframe with filtering time data.
+	:param dataframe: The dataframe use to plot
+	:return: The graph of plotting
+	"""
 
 	dataframe_m = dataframe.loc[dataframe["is_member"] == 0]
 	dataframe_n = dataframe.loc[dataframe["is_member"] == 1]
