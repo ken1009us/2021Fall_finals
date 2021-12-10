@@ -1,4 +1,5 @@
 from scipy import stats
+from haversine import haversine
 
 import seaborn as sns
 import pandas as pd
@@ -8,7 +9,7 @@ import datetime
 
 def load_file():
 	"""
-	This function will return three dataframes. (trip, station, weather)
+	This function will return four dataframes. (trip, station, weather, capitalbikeshare-tripdata)
 	:return: dataframe
 
 	>>> load_file()
@@ -66,21 +67,59 @@ def load_file():
 	3          3.42      11.12       7.51   7.85   5.45    2014
 	4          6.04      12.27       8.78  10.77   7.51    2014
 
+	----------------------------------------------------------------
+
+	                ride_id rideable_type           started_at
+	0      77A0F1B26D1597B1   docked_bike  2020-04-25 17:28:39
+	1      8698F10128EA4F18   docked_bike  2020-04-06 07:54:59
+	2      AA07819DC0F58872   docked_bike  2020-04-22 17:06:18
+	3      DA909BCA92EF85AB   docked_bike  2020-04-16 15:22:40
+	4      B36F1E14D8C6757E   docked_bike  2020-04-10 13:19:41
+
+	                  ended_at                 start_station_name
+	0      2020-04-25 17:35:04  Rhode Island & Connecticut Ave NW
+	1      2020-04-06 07:57:24                     21st & I St NW
+	2      2020-04-22 18:08:32     Connecticut Ave & Tilden St NW
+	3      2020-04-16 15:58:37                      7th & E St SW
+	4      2020-04-10 13:23:05      Potomac & Pennsylvania Ave SE
+
+	       start_station_id                end_station_name  end_station_id
+	0                 31239                  12th & L St NW         31251.0
+	1                 31205                  18th & L St NW         31224.0
+	2                 31313  Connecticut Ave & Tilden St NW         31313.0
+	3                 31294                   7th & E St SW         31294.0
+	4                 31606  8th & Eye St SE / Barracks Row         31608.0
+
+	       start_lat  start_lng    end_lat    end_lng member_casual
+	0      38.905996 -77.039802  38.903819 -77.028400        casual
+	1      38.900711 -77.046449  38.903741 -77.042452        member
+	2      38.941139 -77.061977  38.941139 -77.061977        casual
+	3      38.883450 -77.021741  38.883450 -77.021741        casual
+	4      38.880300 -76.986200  38.879200 -76.995300        member
+
 	"""
-	areaName = input('Which area? (Montreal, Toronto, Washington): ')
+
+	area_name = input('Which area? (Montreal, Toronto, Washington): ')
 	# nrows=10000000
-	trips_df = pd.read_csv(f'data/{areaName}/trips.csv', delimiter=',', nrows=1000000)
-	stations_df = pd.read_csv(f'data/{areaName}/stations.csv', delimiter=',')
-	weather_df = pd.read_csv(f'data/{areaName}/weather.csv', delimiter=',')
-	return trips_df, stations_df, weather_df
+	trips_df = pd.read_csv(f'data/{area_name}/trips.csv', delimiter=',', nrows=1000000)
+	stations_df = pd.read_csv(f'data/{area_name}/stations.csv', delimiter=',')
+	weather_df = pd.read_csv(f'data/{area_name}/weather.csv', delimiter=',')
+
+	was_month = input('Which month do you want to analyze? (4, 5, 6): ')
+	was_trip_dis_df = pd.read_csv(f'data/Washington/20200{was_month}-capitalbikeshare-tripdata.csv',
+									delimiter=',', nrows=100000)
+
+	return trips_df, stations_df, weather_df, was_trip_dis_df
+	# return was_trip_dis_df
 
 
-def data_preprocessing(trips_df, weather_df):
+def data_preprocessing(trips_df, weather_df, was_trip_dis_df):
 	"""
 	This function will return two modified dataframes (trip and weather).
 
 	:param: trips_df: (dataframe) the dataframe that contains the data of trips.
 	:param: weather_df: (dataframe) the dataframe that contains the data of weather conditions.
+	:param: was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip
 
 	>>> data_preprocessing(trips_df, weather_df)
 
@@ -121,6 +160,15 @@ def data_preprocessing(trips_df, weather_df):
 	3          3.42      11.12       7.51   7.85   5.45    2014
 	4          6.04      12.27       8.78  10.77   7.51    2014
 
+	----------------------------------------------------------------
+
+	                ride_id rideable_type           started_at             ended_at  ...  start_lng    end_lat    end_lng  member_casual
+	0      77A0F1B26D1597B1   docked_bike  2020-04-25 17:28:39  2020-04-25 17:35:04  ... -77.039802  38.903819 -77.028400         casual
+	1      8698F10128EA4F18   docked_bike  2020-04-06 07:54:59  2020-04-06 07:57:24  ... -77.046449  38.903741 -77.042452         member
+	2      AA07819DC0F58872   docked_bike  2020-04-22 17:06:18  2020-04-22 18:08:32  ... -77.061977  38.941139 -77.061977         casual
+	3      DA909BCA92EF85AB   docked_bike  2020-04-16 15:22:40  2020-04-16 15:58:37  ... -77.021741  38.883450 -77.021741         casual
+	4      B36F1E14D8C6757E   docked_bike  2020-04-10 13:19:41  2020-04-10 13:23:05  ... -76.986200  38.879200 -76.995300         member
+
 	"""
 	trips_df = trips_df
 	trips_df['start_date']= pd.to_datetime(trips_df['start_date'])
@@ -132,7 +180,11 @@ def data_preprocessing(trips_df, weather_df):
 	# convert date to datetime
 	weather_df['date']= pd.to_datetime(weather_df['date'])
 
-	return trips_df, weather_df
+	was_trip_dis_df = was_trip_dis_df
+	# There are some rows without the data
+	was_trip_dis_df = was_trip_dis_df.dropna()
+
+	return trips_df, weather_df, was_trip_dis_df
 
 
 def data_analysis(new_trips_df, new_weather_df):
@@ -343,6 +395,7 @@ def avg_duration(trips_df):
 	:return: member_d (dataframe) the dataframe that contains the data of average daily duration of trips for member riders.
 	:return: casual_d the dataframe that contains the data of average daily duration of trips for casual riders.
 	"""
+
 	# check the average duration for each member and casual rider
 	total_duration = trips_df.groupby(['start_date_day', 'is_member'])['duration_sec'].sum()
 	totalnum = trips_df.groupby(['start_date_day', 'is_member'])['is_member'].count()
@@ -364,6 +417,7 @@ def plot_duration(member_d, casual_d):
 	:param: member_d: (dataframe) the dataframe that contains the data of average daily duration of trips for member riders.
 	:param: casual_d: (dataframe) the dataframe that contains the data of average daily duration of trips for casual riders.
 	"""
+
 	plt.figure(dpi=120)
 	plt.plot_bar(member_d['start_date_day'], member_d['average duration'], label='member riders')
 	plt.plot_bar(casual_d['start_date_day'], casual_d['average duration'], label='casual riders')
@@ -375,10 +429,77 @@ def plot_duration(member_d, casual_d):
 	plt.show()
 
 
-if __name__ == '__main__':
-	trips_df, stations_df, weather_df = load_file()
+def count_distance(new_was_trip_dis_df):
+	"""
+	This function is used for adding the distance column.
+	:param: new_was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip.
 
-	new_trips_df, new_weather_df = data_preprocessing(trips_df, weather_df)
+	>>> count_distance(new_was_trip_dis_df)
+
+	1269.0171096
+	450.7676123
+	1012.2497737
+	1012.2497737
+	1012.2497737
+
+	"""
+
+	new_was_trip_dis_df = new_was_trip_dis_df
+	lon_start = new_was_trip_dis_df['start_lng']
+	lat_start = new_was_trip_dis_df['start_lat']
+	lon_end = new_was_trip_dis_df['end_lng']
+	lat_end = new_was_trip_dis_df['end_lat']
+	g1 = (lon_start, lat_start)
+	g2 = (lon_end, lat_end)
+	ret = haversine(g1, g2) * 1000
+	res = "%.7f" % ret
+
+	return res
+
+
+def add_distance_column(new_was_trip_dis_df):
+	"""
+	This function is used for adding the distance column.
+	:param: was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip.
+
+	>>> add_distance_column(new_was_trip_dis_df)
+
+	                ride_id rideable_type           started_at             ended_at  ...    end_lat    end_lng member_casual      distance
+	0      77A0F1B26D1597B1   docked_bike  2020-04-25 17:28:39  2020-04-25 17:35:04  ...  38.903819 -77.028400        casual  1269.0171096
+	1      8698F10128EA4F18   docked_bike  2020-04-06 07:54:59  2020-04-06 07:57:24  ...  38.903741 -77.042452        member   450.7676123
+	4      B36F1E14D8C6757E   docked_bike  2020-04-10 13:19:41  2020-04-10 13:23:05  ...  38.879200 -76.995300        member  1012.2497737
+	5      3C10F9AE61844C89   docked_bike  2020-04-26 12:30:57  2020-04-26 12:34:15  ...  38.879200 -76.995300        member  1012.2497737
+	6      361BF81F8528597B   docked_bike  2020-04-17 16:44:31  2020-04-17 16:47:44  ...  38.879200 -76.995300        member  1012.2497737
+
+	"""
+	new_was_trip_dis_df = new_was_trip_dis_df
+	new_was_trip_dis_df['distance'] = new_was_trip_dis_df.apply(lambda new_was_trip_dis_df: count_distance(new_was_trip_dis_df), axis=1)
+	new_was_trip_dis_df = new_was_trip_dis_df.drop(new_was_trip_dis_df[new_was_trip_dis_df.distance == '0.0000000'].index)
+
+	return new_was_trip_dis_df
+
+
+def plot_was_member_casual_distance(final_was_trip_dis_df):
+	"""
+	This function is used for ploting the bart charts for analyzing the hypothesis 4.
+	:param: final_was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip.
+	"""
+
+	final_was_trip_dis_df = final_was_trip_dis_df
+	df = final_was_trip_dis_df[['member_casual', 'distance']]
+	df['distance'] = df['distance'].astype(float, errors = 'raise')
+	df = df.groupby('member_casual').sum()
+	df.plot(kind='bar', y='distance', use_index=True, legend=False, title='Distance of members and casual riders')
+	plt.xlabel("members and casual riders", fontsize=7)
+	plt.ylabel("distance", fontsize=7)
+	plt.xticks(fontsize=5)
+	plt.yticks(fontsize=7)
+	plt.show()
+
+
+if __name__ == '__main__':
+	trips_df, stations_df, weather_df, was_trip_dis_df = load_file()
+	new_trips_df, new_weather_df, new_was_trip_dis_df = data_preprocessing(trips_df, weather_df, was_trip_dis_df)
 	column_name_list, weather_duration_relation_df, stat = data_analysis(new_trips_df, new_weather_df)
 	plot_scatter(column_name_list, weather_duration_relation_df)
 	plot_heatMap(stat)
@@ -403,3 +524,6 @@ if __name__ == '__main__':
 
 	member_duration, casual_duration = avg_duration(new_trips_df)
 	plot_duration(member_duration, casual_duration)
+
+	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
+	plot_was_member_casual_distance(final_was_trip_dis_df)
