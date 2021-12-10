@@ -159,5 +159,5 @@ https://www.kaggle.com/v1teka/bike-sharing-big-data-systems-dev-impl/notebook
 2. Capital Bikeshare trip history data (Capital Bikeshare is a bike-sharing company in Washington)\
 https://s3.amazonaws.com/capitalbikeshare-data/index.html
 
-3. Novel Corona Virus 2019 Dataset\
+3. COVID-19 in USA
 https://www.kaggle.com/sudalairajkumar/covid19-in-usa
