@@ -525,6 +525,24 @@ def plot_was_member_casual_distance(final_was_trip_dis_df):
 	plt.show()
 
 
+def daily_distance(trip_dis_df):
+	"""
+	This function returns a dataframe that the daily distance in that month
+	:param trip_dis_df: (dataframe) the dataframe which contains the distance of each trip
+	:return: distance_df (dataframe) the dataframe contains the total distance of each day in that month
+	"""
+	daily_distance_df = trip_dis_df.reset_index()
+	daily_distance_df = daily_distance_df[['started_at', 'distance']]
+	daily_distance_df['date_date'] = pd.to_datetime(daily_distance_df['started_at']).dt.date
+	daily_distance_df = daily_distance_df[['date_date', 'distance']]
+	daily_distance_df['distance'] = daily_distance_df['distance'].astype(float, errors='raise')
+	daily_distance_df['distance'] = round(daily_distance_df['distance'], 2)
+	daily_distance_df = daily_distance_df.set_index('date_date')
+	daily_distance = daily_distance_df.groupby(['date_date'])['distance'].sum()
+	distance_df = daily_distance.to_frame().reset_index()
+	return distance_df
+
+
 if __name__ == '__main__':
 	trips_df, stations_df, weather_df, was_trip_dis_df = load_file()
 	new_trips_df, new_weather_df, new_was_trip_dis_df = data_preprocessing(trips_df, weather_df, was_trip_dis_df)
@@ -555,3 +573,7 @@ if __name__ == '__main__':
 
 	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
 	plot_was_member_casual_distance(final_was_trip_dis_df)
+
+	final_was_trip_dis_df = add_distance_column(new_was_trip_dis_df)
+	daily_total_distance = daily_distance(final_was_trip_dis_df)
+
