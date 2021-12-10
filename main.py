@@ -519,10 +519,10 @@ def plot_was_member_casual_distance(final_was_trip_dis_df):
 	df['distance'] = df['distance'].astype(float, errors = 'raise')
 	df = df.groupby('member_casual').sum()
 	df.plot(kind='bar', y='distance', use_index=True, legend=False, title='Distance of members and casual riders')
-	plt.xlabel("members and casual riders", fontsize=7)
-	plt.ylabel("distance", fontsize=7)
-	plt.xticks(fontsize=5)
-	plt.yticks(fontsize=7)
+	plt.xlabel("members and casual riders", fontsize=10)
+	plt.ylabel("distance", fontsize=10)
+	plt.xticks(fontsize=10)
+	plt.yticks(fontsize=10)
 	plt.show()
 
 
