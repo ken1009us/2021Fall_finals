@@ -16,16 +16,18 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install some mo
 pip install scipy
 pip install seaborn
 pip install numpy
-pip import pandas
+pip install pandas
 pip install matplotlib
+pip install haversine
 ```
 
 ## Preparation
 
-Import scipy, seaborn, numpy, pandas, matplotlib, datetime.
+Import scipy, seaborn, numpy, pandas, matplotlib, datetime, haversine.
 
 ```python
 from scipy import stats
+from haversine import haversine
 
 import seaborn as sns
 import numpy as np
@@ -72,7 +74,7 @@ ws10m_max: Maximum Wind Speed at 10 Meters (m/s)\
 ws50m: Wind Speed at 50 Meters (m/s)\
 ws10m: Wind Speed at 10 Meters (m/s)\
 
-Hypothesis #1 - Total daily trips duration depends on weather conditions (Take Montreal for example)
+### Hypothesis #1 - Total daily trips duration depends on weather conditions (Take Montreal for example)
 
 Here are some scatter plots, they show us the correlation between weather conditions and total daily trips duration. I used the for loop to draw the scatter plot and set titles for each factor.
 
@@ -91,7 +93,7 @@ This is a heat map. We can clearly spot linear relationships between variables t
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo1-3.png "Station Dataframe")
 
 
-Hypothesis #2 - Club members ride longer in a trip
+### Hypothesis #2 - Club members ride longer in a trip
 
 We aimed to verify if club members ride longer in a trip.
 
@@ -109,7 +111,7 @@ As for the Washington region, the casual riders also ride longer than the member
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo2-w.png "Station Dataframe")
 
 
-Hypothesis #3 - Compared to casual riders, member riders have a higher possibility to take bikes
+### Hypothesis #3 - Compared to casual riders, member riders have a higher possibility to take bikes
 
 Calculate the percentage of members riding bikes.
 
@@ -125,10 +127,25 @@ In Washington, you can see that the proportion of casual riders is quite low jus
 
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo3-w.png "Station Dataframe")
 
-Hypothesis #4 - In Washington DC, members tend to ride a longer distance than casual riders on a trip.
+### Hypothesis #4 - During April to June in 2020, members tend to ride a longer distance than casual riders on a trip in Washington.
+
+In April, members tend to ride a longer distance than casual riders.
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo4-m4.png "Station Dataframe")
+
+In May, members tend to ride a little longer distance than casual riders.
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo4-m5.png "Station Dataframe")
+
+In June, casual riders tend to ride a longer distance than members.
+
+![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/hypo4-m6.png "Station Dataframe")
 
 
 
+
+
+### Hypothesis #5 - During April to June in 2020, as the number of confirmed cases for coronavirus increases, the daily average distance of trips would decrease in Washington.
 
 
 
