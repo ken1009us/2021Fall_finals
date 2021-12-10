@@ -448,8 +448,8 @@ def plot_duration(member_d, casual_d):
 	"""
 
 	plt.figure(dpi=120)
-	plt.plot_bar(member_d['start_date_day'], member_d['average duration'], label='member riders')
-	plt.plot_bar(casual_d['start_date_day'], casual_d['average duration'], label='casual riders')
+	plt.plot(member_d['start_date_day'], member_d['average duration'], label='member riders')
+	plt.plot(casual_d['start_date_day'], casual_d['average duration'], label='casual riders')
 	plt.title('Casual riders ride longer')
 	plt.xlabel('Date')
 	plt.ylabel('Trip Duration (sec)')
