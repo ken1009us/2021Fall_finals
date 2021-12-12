@@ -39,15 +39,15 @@ import matplotlib.pyplot as plt
 ### Due to the limitation of uploading files on Git, please download the files as below to run the code.
 
 Data source for hypothesis #1 to #3
-1. Bike Sharing - Big Data Systems development & implementation\
+### Bike Sharing - Big Data Systems development & implementation\
 https://www.kaggle.com/v1teka/bike-sharing-big-data-systems-dev-impl/notebook
 
 Data source for hypothesis #4 and #5
-2. Capital Bikeshare trip history data (Please use the files of 2020 April, 2020 Maym and 2020 June)\
+### Capital Bikeshare trip history data (Please use the files of 2020 April, 2020 Maym and 2020 June)\
 https://s3.amazonaws.com/capitalbikeshare-data/index.html
 
 Data source for hypothesis #5
-3. COVID-19 in USA\
+### COVID-19 in USA\
 https://www.kaggle.com/sudalairajkumar/covid19-in-usa
 
 
