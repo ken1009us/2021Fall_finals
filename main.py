@@ -18,7 +18,8 @@ def load_file():
 	stations_df = pd.read_csv(f'data/{area_name}/stations.csv', delimiter=',')
 	weather_df = pd.read_csv(f'data/{area_name}/weather.csv', delimiter=',')
 
-	was_month = input('Which month do you want to analyze for hypothesis 4? (4, 5, 6): ')
+	was_month = input('Which month in 2020 do you want to analyze for hypothesis 4 (During April to June in 2020, '
+					  'members tend to ride a longer distance than casual riders on a trip in Washington.) ? (4, 5, 6): ')
 	was_trip_dis_df = pd.read_csv(f'data/Washington/20200{was_month}-capitalbikeshare-tripdata.csv',
 									delimiter=',', nrows=100000)
 	us_confirmed_df = pd.read_csv(f'data/us_counties_covid19_daily.csv', delimiter=',')
@@ -86,10 +87,10 @@ def data_analysis(new_trips_df, new_weather_df):
 	# skip the final column (duration_sec).
 	column_name_list = column_name_list[0:-1]
 
-	for i in range(len(column_name_list)):
-		print(f'The correlation between {column_name_list[i]} and total daily trips duration')
-		print(stats.pearsonr(weather_duration_relation_df[column_name_list[i]],
-                         	 weather_duration_relation_df['duration_sec']))
+	# for i in range(len(column_name_list)):
+	# 	print(f'The correlation between {column_name_list[i]} and total daily trips duration')
+	# 	print(stats.pearsonr(weather_duration_relation_df[column_name_list[i]],
+    #                      	 weather_duration_relation_df['duration_sec']))
 
 	stat = round(weather_duration_relation_df.corr(), 2)
 
