@@ -143,13 +143,19 @@ In June, casual riders tend to ride a longer distance than members.
 
 
 
-
-
 ### Hypothesis #5 - During April to June in 2020, as the number of confirmed cases for coronavirus increases, the daily average distance of trips would decrease in Washington.
 
+The relationship between daily distance and confired cases in April 2020.
 
+![Screen Shot 2021-12-12 at 1 52 01 PM](https://user-images.githubusercontent.com/73263355/145727320-0f8911e9-9bc8-47b8-9af0-753cb07e80b9.png)
 
+The relationship between daily distance and confired cases in May 2020.
 
+![Screen Shot 2021-12-12 at 1 55 09 PM](https://user-images.githubusercontent.com/73263355/145727432-d1513249-e8f5-49f0-9d22-747f7e061d57.png)
+
+The relationship between daily distance and confired cases in June 2020.
+
+![Screen Shot 2021-12-12 at 1 57 09 PM](https://user-images.githubusercontent.com/73263355/145727505-37b0f8e3-bc38-4840-bcd0-a13c5edd218b.png)
 
 ## Data Sources
 
