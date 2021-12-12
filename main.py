@@ -11,92 +11,6 @@ def load_file():
 	"""
 	This function will return four dataframes. (trip, station, weather, capitalbikeshare-tripdata)
 	:return: dataframe
-
-	>>> load_file()
-
-	                 start_date  start_station_code             end_date
-	0       2014-06-01 00:00:00                6223  2014-06-01 00:27:00
-	1       2014-06-01 00:00:00                6223  2014-06-01 00:28:00
-	2       2014-06-01 00:00:00                6255  2014-06-01 00:05:00
-	3       2014-06-01 00:00:00                6059  2014-06-01 00:21:00
-	4       2014-06-01 00:00:00                6059  2014-06-01 00:21:00
-
-	        end_station_code  duration_sec  is_member  yearid
-	0                   6004        1620.0          0    2014
-	1                   6004        1680.0          0    2014
-	2                   6907         300.0          0    2014
-	3                   6008        1260.0          0    2014
-	4                   6008        1260.0          0    2014
-
-	----------------------------------------------------------------
-
-	      code                                               name   latitude
-	0     6209                                     Milton / Clark  45.512520
-	1     6436                           Côte St-Antoine / Clarke  45.486452
-	2     6214                                    Square St-Louis  45.517350
-	3     6248                              St-Dominique / Rachel  45.518593
-	4     6164                                 Chambord / Laurier  45.532955
-
-	      longitude  yearid
-	0    -73.570620    2014
-	1    -73.595234    2014
-	2    -73.569060    2014
-	3    -73.581566    2014
-	4    -73.584194    2014
-
-	----------------------------------------------------------------
-
-	           date  prectot  qv2m   rh2m      ps  t2m_range    ts  t2mdew
-	0    2014-04-01     0.01  2.99  88.53  100.53      10.08 -1.54   -3.33
-	1    2014-04-02     0.06  3.63  89.75  100.03       8.66  0.41   -0.73
-	2    2014-04-03     0.59  2.57  85.51  100.65       7.10 -2.89   -5.25
-	3    2014-04-04     9.05  3.25  91.28   99.94      11.31 -0.74   -2.67
-	4    2014-04-05     2.05  3.73  86.95   99.02       6.58  1.26   -0.55
-
-	      t2mwet  t2m_max  ...   t2m  ws50m_range  ws10m_range  ws50m_min
-	0      -3.31     2.44  ... -1.57         3.21         2.21       5.11
-	1      -0.72     3.75  ...  0.83         3.16         3.55       6.21
-	2      -5.22     0.40  ... -3.14         2.41         1.65       4.24
-	3      -2.65     3.81  ... -0.96         5.04         4.10       6.08
-	4      -0.54     3.93  ...  1.49         2.48         2.74       9.79
-
-	      ws10m_min  ws50m_max  ws10m_max  ws50m  ws10m  yearid
-	0          3.25       8.32       5.46   6.62   4.21    2014
-	1          3.12       9.37       6.67   7.69   4.72    2014
-	2          2.40       6.65       4.06   5.18   3.44    2014
-	3          3.42      11.12       7.51   7.85   5.45    2014
-	4          6.04      12.27       8.78  10.77   7.51    2014
-
-	----------------------------------------------------------------
-
-	                ride_id rideable_type           started_at
-	0      77A0F1B26D1597B1   docked_bike  2020-04-25 17:28:39
-	1      8698F10128EA4F18   docked_bike  2020-04-06 07:54:59
-	2      AA07819DC0F58872   docked_bike  2020-04-22 17:06:18
-	3      DA909BCA92EF85AB   docked_bike  2020-04-16 15:22:40
-	4      B36F1E14D8C6757E   docked_bike  2020-04-10 13:19:41
-
-	                  ended_at                 start_station_name
-	0      2020-04-25 17:35:04  Rhode Island & Connecticut Ave NW
-	1      2020-04-06 07:57:24                     21st & I St NW
-	2      2020-04-22 18:08:32     Connecticut Ave & Tilden St NW
-	3      2020-04-16 15:58:37                      7th & E St SW
-	4      2020-04-10 13:23:05      Potomac & Pennsylvania Ave SE
-
-	       start_station_id                end_station_name  end_station_id
-	0                 31239                  12th & L St NW         31251.0
-	1                 31205                  18th & L St NW         31224.0
-	2                 31313  Connecticut Ave & Tilden St NW         31313.0
-	3                 31294                   7th & E St SW         31294.0
-	4                 31606  8th & Eye St SE / Barracks Row         31608.0
-
-	       start_lat  start_lng    end_lat    end_lng member_casual
-	0      38.905996 -77.039802  38.903819 -77.028400        casual
-	1      38.900711 -77.046449  38.903741 -77.042452        member
-	2      38.941139 -77.061977  38.941139 -77.061977        casual
-	3      38.883450 -77.021741  38.883450 -77.021741        casual
-	4      38.880300 -76.986200  38.879200 -76.995300        member
-
 	"""
 
 	area_name = input('Which area do you want to analyze? (Montreal, Toronto, Washington): ')
@@ -119,55 +33,6 @@ def data_preprocessing(trips_df, weather_df, was_trip_dis_df):
 	:param: trips_df: (dataframe) the dataframe that contains the data of trips.
 	:param: weather_df: (dataframe) the dataframe that contains the data of weather conditions.
 	:param: was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip
-
-	>>> data_preprocessing(trips_df, weather_df)
-
-		        	 start_date  start_station_code             end_date
-	0       2014-06-01 00:00:00                6223  2014-06-01 00:27:00
-	1       2014-06-01 00:00:00                6223  2014-06-01 00:28:00
-	2       2014-06-01 00:00:00                6255  2014-06-01 00:05:00
-	3       2014-06-01 00:00:00                6059  2014-06-01 00:21:00
-	4       2014-06-01 00:00:00                6059  2014-06-01 00:21:00
-
-	        end_station_code  duration_sec  is_member  yearid
-	0                   6004        1620.0          0    2014
-	1                   6004        1680.0          0    2014
-	2                   6907         300.0          0    2014
-	3                   6008        1260.0          0    2014
-	4                   6008        1260.0          0    2014
-
-	----------------------------------------------------------------
-
-	           date  prectot  qv2m   rh2m      ps  t2m_range    ts  t2mdew
-	0    2014-04-01     0.01  2.99  88.53  100.53      10.08 -1.54   -3.33
-	1    2014-04-02     0.06  3.63  89.75  100.03       8.66  0.41   -0.73
-	2    2014-04-03     0.59  2.57  85.51  100.65       7.10 -2.89   -5.25
-	3    2014-04-04     9.05  3.25  91.28   99.94      11.31 -0.74   -2.67
-	4    2014-04-05     2.05  3.73  86.95   99.02       6.58  1.26   -0.55
-
-	      t2mwet  t2m_max  ...   t2m  ws50m_range  ws10m_range  ws50m_min
-	0      -3.31     2.44  ... -1.57         3.21         2.21       5.11
-	1      -0.72     3.75  ...  0.83         3.16         3.55       6.21
-	2      -5.22     0.40  ... -3.14         2.41         1.65       4.24
-	3      -2.65     3.81  ... -0.96         5.04         4.10       6.08
-	4      -0.54     3.93  ...  1.49         2.48         2.74       9.79
-
-	      ws10m_min  ws50m_max  ws10m_max  ws50m  ws10m  yearid
-	0          3.25       8.32       5.46   6.62   4.21    2014
-	1          3.12       9.37       6.67   7.69   4.72    2014
-	2          2.40       6.65       4.06   5.18   3.44    2014
-	3          3.42      11.12       7.51   7.85   5.45    2014
-	4          6.04      12.27       8.78  10.77   7.51    2014
-
-	----------------------------------------------------------------
-
-	                ride_id rideable_type           started_at             ended_at  ...  start_lng    end_lat    end_lng  member_casual
-	0      77A0F1B26D1597B1   docked_bike  2020-04-25 17:28:39  2020-04-25 17:35:04  ... -77.039802  38.903819 -77.028400         casual
-	1      8698F10128EA4F18   docked_bike  2020-04-06 07:54:59  2020-04-06 07:57:24  ... -77.046449  38.903741 -77.042452         member
-	2      AA07819DC0F58872   docked_bike  2020-04-22 17:06:18  2020-04-22 18:08:32  ... -77.061977  38.941139 -77.061977         casual
-	3      DA909BCA92EF85AB   docked_bike  2020-04-16 15:22:40  2020-04-16 15:58:37  ... -77.021741  38.883450 -77.021741         casual
-	4      B36F1E14D8C6757E   docked_bike  2020-04-10 13:19:41  2020-04-10 13:23:05  ... -76.986200  38.879200 -76.995300         member
-
 	"""
 	trips_df = trips_df
 	trips_df['start_date']= pd.to_datetime(trips_df['start_date'])
@@ -193,61 +58,6 @@ def data_analysis(new_trips_df, new_weather_df):
 
 	:param: new_trips_df: (dataframe) the dataframe that contains the data of trips.
 	:param: new_weather_df: (dataframe) the dataframe that contains the data of weather conditions.
-
-	>>> data_analysis(new_trips_df, new_weather_df)
-
-	['prectot', 'qv2m', 'rh2m', 'ps', 't2m_range', 'ts', 't2mdew',
-	 't2mwet', 't2m_max', 't2m_min', 't2m', 'ws50m_range', 'ws10m_range',
-	 'ws50m_min', 'ws10m_min', 'ws50m_max', 'ws10m_max', 'ws50m', 'ws10m',
-	 'duration_sec']
-
-	----------------------------------------------------------------
-
-		    	date  prectot  qv2m   rh2m     ps  t2m_range    ts  t2mdew
-	0    2014-04-01     0.01  2.99  88.53  100.53      10.08 -1.54   -3.33
-	1    2014-04-02     0.06  3.63  89.75  100.03       8.66  0.41   -0.73
-	2    2014-04-03     0.59  2.57  85.51  100.65       7.10 -2.89   -5.25
-	3    2014-04-04     9.05  3.25  91.28   99.94      11.31 -0.74   -2.67
-	4    2014-04-05     2.05  3.73  86.95   99.02       6.58  1.26   -0.55
-
-	      t2mwet  t2m_max  ...   t2m  ws50m_range  ws10m_range  ws50m_min
-	0      -3.31     2.44  ... -1.57         3.21         2.21       5.11
-	1      -0.72     3.75  ...  0.83         3.16         3.55       6.21
-	2      -5.22     0.40  ... -3.14         2.41         1.65       4.24
-	3      -2.65     3.81  ... -0.96         5.04         4.10       6.08
-	4      -0.54     3.93  ...  1.49         2.48         2.74       9.79
-
-	      ws10m_min  ws50m_max  ws10m_max  ws50m  ws10m  yearid
-	0          3.25       8.32       5.46   6.62   4.21    2014
-	1          3.12       9.37       6.67   7.69   4.72    2014
-	2          2.40       6.65       4.06   5.18   3.44    2014
-	3          3.42      11.12       7.51   7.85   5.45    2014
-	4          6.04      12.27       8.78  10.77   7.51    2014
-
-	----------------------------------------------------------------
-
-	              prectot  qv2m  rh2m    ps  t2m_range    ts  t2mdew  t2mwet
-	prectot          1.00  0.24  0.69 -0.31      -0.44  0.02    0.19    0.19
-	qv2m             0.24  1.00  0.17 -0.31      -0.19  0.94    0.98    0.98
-	rh2m             0.69  0.17  1.00 -0.47      -0.40 -0.10    0.14    0.14
-	ps              -0.31 -0.31 -0.47  1.00       0.15 -0.26   -0.35   -0.35
-	t2m_range       -0.44 -0.19 -0.40  0.15       1.00 -0.07   -0.18   -0.18
-	ts               0.02  0.94 -0.10 -0.26      -0.07  1.00    0.97    0.97
-	t2mdew           0.19  0.98  0.14 -0.35      -0.18  0.97    1.00    1.00
-	t2mwet           0.19  0.98  0.14 -0.35      -0.18  0.97    1.00    1.00
-	t2m_max         -0.07  0.89 -0.18 -0.22       0.15  0.97    0.92    0.92
-	t2m_min          0.13  0.94  0.00 -0.28      -0.31  0.97    0.97    0.97
-	t2m              0.02  0.94 -0.11 -0.25      -0.06  1.00    0.97    0.97
-	ws50m_range      0.07 -0.10 -0.05 -0.07       0.28 -0.14   -0.16   -0.16
-	ws10m_range      0.32 -0.26  0.32 -0.26       0.08 -0.40   -0.33   -0.33
-	ws50m_min        0.23 -0.32  0.35 -0.05      -0.18 -0.42   -0.33   -0.33
-	ws10m_min        0.18 -0.34  0.29  0.02      -0.17 -0.41   -0.34   -0.34
-	ws50m_max        0.29 -0.40  0.31 -0.12       0.04 -0.54   -0.47   -0.47
-	ws10m_max        0.36 -0.41  0.43 -0.19      -0.04 -0.56   -0.46   -0.46
-	ws50m            0.32 -0.36  0.42 -0.16      -0.08 -0.49   -0.40   -0.40
-	ws10m            0.34 -0.41  0.42 -0.15      -0.09 -0.54   -0.45   -0.45
-	duration_sec    -0.51  0.55 -0.55  0.03       0.22  0.76    0.62    0.62
-
 	"""
 	new_trips_df = new_trips_df
 	new_weather_df = new_weather_df
@@ -318,7 +128,7 @@ def cal_percentage(dataframe):
 	:param dataframe: the dataframe with column has member count and total count
 	:return: dataframe with a new column calculating the percentage
 	>>> (25 / 100)* 100
-	25
+	25.0
 	"""
 
 	dataframe['percentage'] = (dataframe['m_count'] / dataframe['d_count']) * 100
@@ -526,16 +336,6 @@ def add_distance_column(new_was_trip_dis_df):
 	"""
 	This function is used for adding the distance column.
 	:param: was_trip_dis_df: (dataframe) the dataframe that contains the data of capital bike share trip.
-
-	>>> add_distance_column(new_was_trip_dis_df)
-
-	                ride_id rideable_type           started_at             ended_at  ...    end_lat    end_lng member_casual      distance
-	0      77A0F1B26D1597B1   docked_bike  2020-04-25 17:28:39  2020-04-25 17:35:04  ...  38.903819 -77.028400        casual  1269.0171096
-	1      8698F10128EA4F18   docked_bike  2020-04-06 07:54:59  2020-04-06 07:57:24  ...  38.903741 -77.042452        member   450.7676123
-	4      B36F1E14D8C6757E   docked_bike  2020-04-10 13:19:41  2020-04-10 13:23:05  ...  38.879200 -76.995300        member  1012.2497737
-	5      3C10F9AE61844C89   docked_bike  2020-04-26 12:30:57  2020-04-26 12:34:15  ...  38.879200 -76.995300        member  1012.2497737
-	6      361BF81F8528597B   docked_bike  2020-04-17 16:44:31  2020-04-17 16:47:44  ...  38.879200 -76.995300        member  1012.2497737
-
 	"""
 	new_was_trip_dis_df = new_was_trip_dis_df
 	new_was_trip_dis_df['distance'] = new_was_trip_dis_df.apply(lambda new_was_trip_dis_df: count_distance(new_was_trip_dis_df), axis=1)
