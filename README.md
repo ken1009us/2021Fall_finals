@@ -35,8 +35,20 @@ import pandas as pd
 import datetime
 import matplotlib.pyplot as plt
 ```
+## Data Sources
+# Due to the limitation of uploading files on Git, please download the files as below to run the code.
 
-## Data
+1. Bike Sharing - Big Data Systems development & implementation
+https://www.kaggle.com/v1teka/bike-sharing-big-data-systems-dev-impl/notebook
+
+2. Capital Bikeshare trip history data (Please use the files of 2020 April, 2020 Maym and 2020 June)\
+https://s3.amazonaws.com/capitalbikeshare-data/index.html
+
+3. COVID-19 in USA\
+https://www.kaggle.com/sudalairajkumar/covid19-in-usa
+
+
+## Data - (For hypotheses #1, hypotheses #2, hypotheses #3)
 
 Trip Dataframe
 
@@ -49,6 +61,7 @@ Station Dataframe
 Weather Dataframe
 
 ![image](https://github.com/ken1009us/2021Fall_finals/blob/main/image/weather.png "Weather Dataframe")
+
 
 ## Output
 
@@ -157,13 +170,4 @@ The relationship between daily distance and confired cases in June 2020.
 
 ![Screen Shot 2021-12-12 at 1 57 09 PM](https://user-images.githubusercontent.com/73263355/145727505-37b0f8e3-bc38-4840-bcd0-a13c5edd218b.png)
 
-## Data Sources
 
-1. Bike Sharing - Big Data Systems dev & impl\
-https://www.kaggle.com/v1teka/bike-sharing-big-data-systems-dev-impl/notebook
-
-2. Capital Bikeshare trip history data (Capital Bikeshare is a bike-sharing company in Washington)\
-https://s3.amazonaws.com/capitalbikeshare-data/index.html
-
-3. COVID-19 in USA\
-https://www.kaggle.com/sudalairajkumar/covid19-in-usa
